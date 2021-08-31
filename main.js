@@ -1,3 +1,4 @@
+const network = require("@hoobs/network");
 const program = require("commander");
 const pjson = require("./package.json");
 const log = require("./server/logger")();
@@ -11,7 +12,7 @@ function daemon() {
         .description("start the portal service")
         .option("-p, --port <port>", "change the port the portal runs on")
         .action((command) => {
-            server.start(command.port);
+            if (!network.connected) server.start(command.port);
         });
 
     program.parse(process.argv);
