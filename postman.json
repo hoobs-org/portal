@@ -1,0 +1,240 @@
+{
+    "info": {
+        "_postman_id": "17a877c2-a9bc-4cd9-b213-9650aaf9f115",
+        "name": "Portal",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Ethernet",
+            "item": [
+                {
+                    "name": "Up",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://hoobs/api/:iface/up/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                ":iface",
+                                "up",
+                                ""
+                            ],
+                            "variable": [
+                                {
+                                    "key": "iface",
+                                    "value": null
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Down",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://hoobs/api/:iface/down/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                ":iface",
+                                "down",
+                                ""
+                            ],
+                            "variable": [
+                                {
+                                    "key": "iface",
+                                    "value": null
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Wireless",
+            "item": [
+                {
+                    "name": "Connect",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"ssid\": \"Network\",\r\n    \"password\": \"password\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://hoobs/api/:iface/connect/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                ":iface",
+                                "connect",
+                                ""
+                            ],
+                            "variable": [
+                                {
+                                    "key": "iface",
+                                    "value": null
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Disconnect",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"ssid\": \"Network\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://hoobs/api/:iface/disconnect/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                ":iface",
+                                "disconnect",
+                                ""
+                            ],
+                            "variable": [
+                                {
+                                    "key": "iface",
+                                    "value": null
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Hotspot",
+            "item": [
+                {
+                    "name": "Start",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"ssid\": \"HOOBS\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://hoobs/api/hotspot/start/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                "hotspot",
+                                "start",
+                                ""
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Stop",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://hoobs/api/hotspot/stop/",
+                            "protocol": "http",
+                            "host": [
+                                "hoobs"
+                            ],
+                            "path": [
+                                "api",
+                                "hotspot",
+                                "stop",
+                                ""
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Status",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://hoobs/api/",
+                    "protocol": "http",
+                    "host": [
+                        "hoobs"
+                    ],
+                    "path": [
+                        "api",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Networks",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://hoobs/api/networks/",
+                    "protocol": "http",
+                    "host": [
+                        "hoobs"
+                    ],
+                    "path": [
+                        "api",
+                        "networks",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

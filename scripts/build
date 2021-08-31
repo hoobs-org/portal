@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+/**************************************************************************************************
+ * hoobs-network                                                                                  *
+ * Copyright (C) 2021 HOOBS                                                                       *
+ *                                                                                                *
+ * This program is free software: you can redistribute it and/or modify                           *
+ * it under the terms of the GNU General Public License as published by                           *
+ * the Free Software Foundation, either version 3 of the License, or                              *
+ * (at your option) any later version.                                                            *
+ *                                                                                                *
+ * This program is distributed in the hope that it will be useful,                                *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of                                 *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                  *
+ * GNU General Public License for more details.                                                   *
+ *                                                                                                *
+ * You should have received a copy of the GNU General Public License                              *
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.                          *
+ **************************************************************************************************/
+
+const program = require("commander");
+const { join } = require("path");
+const { execSync } = require("child_process");
+
+const {
+    existsSync,
+    mkdirSync,
+    readFileSync,
+} = require("fs");
+
+const root = join(__dirname, "../");
+const pjson = JSON.parse(readFileSync(join(root, "package.json")).toString());
+
+program.version(pjson.version, "-v, --version", "output the current version")
+    .allowUnknownOption();
+
+program.command("portal", { isDefault: true })
+    .description("build the wifi portal")
+    .option("-l, --lint", "lint the code before building")
+    .action((command) => {
+        if (command.lint) execSync(`${join(root, "node_modules", ".bin", "vue-cli-service")} lint`, { cwd: root, stdio: "inherit" });
+        if (!existsSync(join(root, "builds"))) mkdirSync(join(root, "builds"));
+        if (existsSync(join(root, "portal"))) execSync(`${join(root, "node_modules", ".bin", "rimraf")} ${join(root, "portal")}`, { cwd: root, stdio: "inherit" });
+
+        execSync(`${join(root, "node_modules", ".bin", "vue-cli-service")} build --modern`, { cwd: root, stdio: "inherit" });
+
+        // MAKE DEB FILE
+    });
+
+program.parse(process.argv);

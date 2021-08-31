@@ -1,0 +1,48 @@
+{
+    "name": "hoobs-portal",
+    "version": "1.0.0",
+    "description": "HOOBS Capitive WiFi Portal",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/hoobs-org/portal.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hoobs-org/portal/issues"
+    },
+    "main": "main.js",
+    "author": {
+        "name": "Michael J Kellsy"
+    },
+    "scripts": {
+        "lint": "eslint '*.ts'",
+        "build": "scripts/build --lint",
+        "debug": "scripts/debug"
+    },
+    "dependencies": {
+        "@hoobs/network": "^1.0.10",
+        "commander": "^8.1.0",
+        "compression": "^1.7.4",
+        "express": "^4.17.1",
+        "http-terminator": "^3.0.0"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vue/cli-plugin-eslint": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/compiler-sfc": "^3.0.0",
+        "@vue/eslint-config-airbnb": "^5.0.2",
+        "axios": "^0.21.1",
+        "babel-eslint": "^10.1.0",
+        "core-js": "^3.6.5",
+        "eslint": "^6.7.2",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-vue": "^7.0.0",
+        "inquirer": "^8.1.2",
+        "nodemon": "^2.0.12",
+        "rimraf": "^3.0.2",
+        "sass": "^1.26.5",
+        "sass-loader": "^8.0.2",
+        "vue": "^3.0.0"
+    }
+}
