@@ -1,6 +1,5 @@
 const network = require("@hoobs/network");
 const command = require("@hoobs/network/lib/command");
-const { uuid } = require("@hoobs/network/lib/hotspot");
 
 class Wireless {
     constructor(app) {
@@ -39,9 +38,8 @@ class Wireless {
                 process.exit();
             } else if (network.hotspot.running) {
                 network.hotspot.stop();
-                network.hotspot.uuid = uuid(4);
-                network.wireless.disconnect(request.params.iface);
-                network.hotspot.start("HOOBS");
+                network.wireless.disconnect("wlan0");
+                network.hotspot.start("HOOBS", "wlan0");
             }
         }
 

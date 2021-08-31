@@ -20,7 +20,7 @@
         "debug": "scripts/debug"
     },
     "dependencies": {
-        "@hoobs/network": "^1.0.10",
+        "@hoobs/network": "^1.0.11",
         "commander": "^8.1.0",
         "compression": "^1.7.4",
         "express": "^4.17.1",

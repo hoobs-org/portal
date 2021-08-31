@@ -45,8 +45,8 @@ class Server {
         this.server.listen(parseInt(port, 10) || 80, () => {
             this.running = true;
 
-            network.wireless.disconnect(((network.devices() || []).find((device) => device.type === "wifi") || {}).iface);
-            network.hotspot.start("HOOBS");
+            network.wireless.disconnect("wlan0");
+            network.hotspot.start("HOOBS", "wlan0");
 
             this.log.info(`listening on port ${parseInt(port, 10) || 80}`);
         });
