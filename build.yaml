@@ -138,16 +138,21 @@ steps:
 
   - copy-file: /var/build/DEBIAN/postinst
     src: postinst
-    perm: 755
+    perm: 0775
 
   - shell: |
-      cp -R cache/LICENSE "${ROOT?}/var/build/usr/lib/hbs-portal/"
+      cp -R LICENSE "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R cache/package.json "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R main.js "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R main "${ROOT?}/var/build/usr/bin/hbs-portal"
       cp -R server "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R interface "${ROOT?}/var/build/usr/lib/hbs-portal/"
     root-fs: /
+
+  - chroot: /
+    shell: |
+      node -v
+      npm -v
 
   - chroot: /
     shell: |
