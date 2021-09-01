@@ -141,6 +141,7 @@ steps:
     perm: 755
 
   - shell: |
+      cp -R cache/LICENSE "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R cache/package.json "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R main.js "${ROOT?}/var/build/usr/lib/hbs-portal/"
       cp -R main "${ROOT?}/var/build/usr/bin/hbs-portal"
