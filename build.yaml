@@ -1,0 +1,161 @@
+steps:
+  - mkimg: "{{ output }}"
+    size: 3G
+
+  - mklabel: msdos
+    device: "{{ output }}"
+
+  - mkpart: primary
+    fs-type: 'fat32'
+    device: "{{ output }}"
+    start: 4MiB
+    end: 20%
+    tag: /boot
+
+  - mkpart: primary
+    device: "{{ output }}"
+    start: 20%
+    end: 100%
+    tag: /
+
+  - kpartx: "{{ output }}"
+
+  - mkfs: vfat
+    partition: /boot
+    label: RASPIFIRM
+
+  - mkfs: ext4
+    partition: /
+    label: RASPIROOT
+
+  - mount: /
+
+  - mount: /boot
+    mount-on: /
+    dirname: '/boot/firmware'
+
+  - unpack-rootfs: /
+
+  - qemu-debootstrap: __RELEASE__
+    mirror: http://deb.debian.org/debian
+    target: /
+    arch: __ARCH__
+    components:
+    - main
+    - contrib
+    - non-free
+    unless: rootfs_unpacked
+
+  - create-file: /etc/apt/sources.list
+    contents: |
+      deb http://deb.debian.org/debian __RELEASE__ main contrib non-free
+      deb http://security.debian.org/debian-security __SECURITY_SUITE__ main contrib non-free
+    unless: rootfs_unpacked
+
+  - chroot: /
+    shell: |
+      apt-get update
+    unless: rootfs_unpacked
+
+  - apt: install
+    packages:
+    - gnupg
+    - less
+    - ca-certificates
+    - dosfstools
+    - parted
+    - dpkg
+    - wget
+    - curl
+    - __LINUX_IMAGE__
+    tag: /
+    unless: rootfs_unpacked
+
+  - chroot: /
+    shell: |
+      mount -t proc /proc proc/
+      apt-get -y install python3-minimal
+    unless: rootfs_unpacked
+
+  - chroot: /
+    shell: |
+      wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+    unless: rootfs_unpacked
+
+  - create-file: /etc/apt/sources.list.d/nodesource.list
+    contents: |
+      deb https://deb.nodesource.com/node_14.x __RELEASE__ main
+    unless: rootfs_unpacked
+
+  - chroot: /
+    shell: |
+      apt-get update
+    unless: rootfs_unpacked
+
+  - apt: install
+    packages:
+    - tar
+    - git
+    - make
+    - gcc
+    - g++
+    - nodejs
+    tag: /
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/DEBIAN
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr/lib
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr/lib/hbs-portal
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr/lib/systemd
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr/lib/systemd/system
+    unless: rootfs_unpacked
+
+  - create-dir: /var/build/usr/bin
+    unless: rootfs_unpacked
+
+  - cache-rootfs: /
+    unless: rootfs_unpacked
+
+  - create-file: /var/build/usr/lib/systemd/system/hbs-portal.service
+    contents: "[Unit]\nDescription=HOOBS Capitive WiFi Portal\nAfter=NetworkManager.service\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/hbs-portal\n\n[Install]\nWantedBy=multi-user.target\n\n"
+
+  - create-file: /var/build/DEBIAN/control
+    contents: "Package: hbs-portal\nVersion: __VERSION__\nSection: base\nPriority: optional\nArchitecture: __ARCH__\nInstalled-Size: 65\nDepends: nodejs (>= 14.15.0)\nMaintainer: HOOBS Maintainers <info@hoobs.com>\nHomepage: https://hoobs.com\nDescription: HOOBS Capitive WiFi Portal\n\n"
+
+  - copy-file: /var/build/DEBIAN/postinst
+    src: postinst
+    perm: 755
+
+  - shell: |
+      cp -R cache/package.json "${ROOT?}/var/build/usr/lib/hbs-portal/"
+      cp -R main.js "${ROOT?}/var/build/usr/lib/hbs-portal/"
+      cp -R main "${ROOT?}/var/build/usr/bin/hbs-portal"
+      cp -R server "${ROOT?}/var/build/usr/lib/hbs-portal/"
+      cp -R interface "${ROOT?}/var/build/usr/lib/hbs-portal/"
+    root-fs: /
+
+  - chroot: /
+    shell: |
+      cd /var/build/usr/lib/hbs-portal
+      npm install
+      cd /var
+      dpkg-deb --build build
+
+  - shell: |
+      cp "${ROOT?}/var/build.deb" "builds/hbs-portal-v__VERSION__-__ARCH__.deb"
+    root-fs: /
+  

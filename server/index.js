@@ -25,7 +25,7 @@ class Server {
             next();
         });
 
-        app.use("/", express.static(join(__dirname, "../portal"), {
+        app.use("/", express.static(join(__dirname, "../interface"), {
             setHeaders: (response) => { response.setHeader("cache-control", "public, max-age=1209600000"); },
         }));
 

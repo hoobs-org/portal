@@ -18,15 +18,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 
-ARGUMENTS=""
+case $1 in
+    lint )  sudo make lint
+            ;;
 
-while [ "$1" != "" ]; do
-    case $1 in
-        * )     ARGUMENTS="$ARGUMENTS $1"
-                ;;
-    esac
+    debug ) sudo make interface
+            sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "sudo node -e 'require(`./main`)();' -- -d"
+            ;;
 
-    shift
-done
+    build ) sudo make portal
+            ;;
 
-sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "scripts/hbs-portal -d$ARGUMENTS"
+    clean ) sudo make clean
+            ;;
+
+    * )     ARGUMENTS="$ARGUMENTS $1"
+            ;;
+esac

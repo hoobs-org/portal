@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ln -s /lib/systemd/system/hbs-portal.service /etc/systemd/system/multi-user.target.wants/hbs-portal.service

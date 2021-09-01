@@ -1,7 +1,7 @@
 const { resolve, join } = require("path");
 
 module.exports = {
-    outputDir: resolve(__dirname, "./portal"),
+    outputDir: resolve(__dirname, "./interface"),
 
     configureWebpack: {
         performance: {
@@ -20,8 +20,8 @@ module.exports = {
 
     chainWebpack: (config) => {
         config.performance.maxEntrypointSize(400000).maxAssetSize(400000);
-        config.entry("app").clear().add("./interface/main.js").end();
-        config.resolve.alias.set("@", join(__dirname, "./interface"));
+        config.entry("app").clear().add("./source/main.js").end();
+        config.resolve.alias.set("@", join(__dirname, "./source"));
 
         config.plugin("html").tap((args) => {
             const payload = args;

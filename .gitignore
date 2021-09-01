@@ -107,5 +107,6 @@ dist
 .DS_Store
 
 # Build output
+interface/
 builds/
-portal/
+cache/
