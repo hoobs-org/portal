@@ -20,6 +20,8 @@ portal-amd64: portal-amd64.yaml
 	time nice $(as_root) vmdb2 --verbose cache/hbs-portal-amd64.yaml --rootfs-tarball=cache/hbs-portal-amd64.tar.gz --output=cache/hbs-portal-amd64.img --log build.log
 	chmod 0755 cache/hbs-portal-amd64.tar.gz
 	rm -f cache/hbs-portal-amd64.img
+	rm -f cache/hbs-portal-amd64.yaml
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-amd64.deb
 
 portal-arm64.yaml: build.yaml
 	cat build.yaml | \
@@ -35,6 +37,8 @@ portal-arm64: portal-arm64.yaml
 	time nice $(as_root) vmdb2 --verbose cache/hbs-portal-arm64.yaml --rootfs-tarball=cache/hbs-portal-arm64.tar.gz --output=cache/hbs-portal-arm64.img --log build.log
 	chmod 0755 cache/hbs-portal-arm64.tar.gz
 	rm -f cache/hbs-portal-arm64.img
+	rm -f cache/hbs-portal-arm64.yaml
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-arm64.deb
 
 portal-armhf.yaml: build.yaml
 	cat build.yaml | \
@@ -50,6 +54,8 @@ portal-armhf: portal-armhf.yaml
 	time nice $(as_root) vmdb2 --verbose cache/hbs-portal-armhf.yaml --rootfs-tarball=cache/hbs-portal-armhf.tar.gz --output=cache/hbs-portal-armhf.img --log build.log
 	chmod 0755 cache/hbs-portal-armhf.tar.gz
 	rm -f cache/hbs-portal-armhf.img
+	rm -f cache/hbs-portal-armhf.yaml
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-armhf.deb
 
 portal-interface:
 	rm -fR ./interface/*
@@ -58,7 +64,7 @@ portal-interface:
 lint:
 	./node_modules/.bin/vue-cli-service lint
 
-portal: lint package portal-interface portal-amd64 portal-arm64 portal-armhf
+portal: lint package portal-interface portal-amd64 portal-arm64 portal-armhf reset
 
 log:
 	touch build.log
@@ -76,6 +82,9 @@ paths: log
 package: paths
 	node -e 'const pjson = require("./package.json"); delete pjson.scripts; delete pjson.devDependencies; require("fs").writeFileSync("cache/package.json", JSON.stringify(pjson, null, 4));'
 	chmod 0755 cache/package.json
+
+reset:
+	rm -f ./cache/package.json
 
 clean:
 	rm -f ./cache/*
