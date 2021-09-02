@@ -79,12 +79,12 @@ steps:
 
   - chroot: /
     shell: |
-      wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+      curl -s https://dl.hoobs.org/debian/pubkey.gpg.key | gpg --dearmor | tee /usr/share/keyrings/hoobs.gpg > /dev/null
     unless: rootfs_unpacked
 
   - create-file: /etc/apt/sources.list.d/nodesource.list
     contents: |
-      deb https://deb.nodesource.com/node_14.x __RELEASE__ main
+      echo 'deb [signed-by=/usr/share/keyrings/hoobs.gpg] https://dl.hoobs.org/debian/ stable main' > /etc/apt/sources.list.d/hoobs.list
     unless: rootfs_unpacked
 
   - chroot: /
@@ -162,6 +162,6 @@ steps:
       dpkg-deb --build build
 
   - shell: |
-      cp "${ROOT?}/var/build.deb" "builds/hbs-portal-__VERSION__-__ARCH__.deb"
+      cp "${ROOT?}/var/build.deb" "builds/hbs-portal-__VERSION__-hoobs-__ARCH__.deb"
     root-fs: /
   

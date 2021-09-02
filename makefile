@@ -21,7 +21,8 @@ portal-amd64: portal-amd64.yaml
 	chmod 0755 cache/hbs-portal-amd64.tar.gz
 	rm -f cache/hbs-portal-amd64.img
 	rm -f cache/hbs-portal-amd64.yaml
-	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-amd64.deb
+	chmod 0755 builds/hbs-portal-${VERSION}-hoobs-amd64.deb
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-hoobs-amd64.deb
 
 portal-arm64.yaml: build.yaml
 	cat build.yaml | \
@@ -38,7 +39,8 @@ portal-arm64: portal-arm64.yaml
 	chmod 0755 cache/hbs-portal-arm64.tar.gz
 	rm -f cache/hbs-portal-arm64.img
 	rm -f cache/hbs-portal-arm64.yaml
-	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-arm64.deb
+	chmod 0755 builds/hbs-portal-${VERSION}-hoobs-arm64.deb
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-hoobs-arm64.deb
 
 portal-armhf.yaml: build.yaml
 	cat build.yaml | \
@@ -55,7 +57,8 @@ portal-armhf: portal-armhf.yaml
 	chmod 0755 cache/hbs-portal-armhf.tar.gz
 	rm -f cache/hbs-portal-armhf.img
 	rm -f cache/hbs-portal-armhf.yaml
-	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-armhf.deb
+	chmod 0755 builds/hbs-portal-${VERSION}-hoobs-armhf.deb
+	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-hoobs-armhf.deb
 
 portal-interface:
 	rm -fR ./interface/*
