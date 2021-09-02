@@ -46,18 +46,18 @@ publish() {
 
 list() {
     case $1 in
-        stable )    reprepro -b ../repo/debian list stable
+        stable )    reprepro -b ../repo/debian list stable | grep hbs-portal
                     ;;
 
-        edge )      reprepro -b ../repo/debian list edge
+        edge )      reprepro -b ../repo/debian list edge | grep hbs-portal
                     ;;
 
-        bleeding )  reprepro -b ../repo/debian list bleeding
+        bleeding )  reprepro -b ../repo/debian list bleeding | grep hbs-portal
                     ;;
 
-        * )         reprepro -b ../repo/debian list stable
-                    reprepro -b ../repo/debian list edge
-                    reprepro -b ../repo/debian list bleeding
+        * )         reprepro -b ../repo/debian list stable | grep hbs-portal
+                    reprepro -b ../repo/debian list edge | grep hbs-portal
+                    reprepro -b ../repo/debian list bleeding | grep hbs-portal
                     ;;
     esac
 }

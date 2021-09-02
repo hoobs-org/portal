@@ -1,48 +1,52 @@
-USER=`whoami`
-VERSION=`node -e 'console.log(require("./package.json").version)'`
+VERSION=
 
-ifeq ($(shell id -u),0)
-	as_root = 
-else
-	as_root = sudo
-endif
-
-portal.yaml: build.yaml
-	cat build.yaml | \
-	sed "s/__RELEASE__/bullseye/" | \
-	sed "s/__VERSION__/${VERSION}/" | \
-	sed "s/__SECURITY_SUITE__/bullseye-security/" | \
-	sed "s/__ARCH__/amd64/" | \
-	sed "s/__LINUX_IMAGE__/linux-image-amd64/" > cache/hbs-portal.yaml
-
-portal-interface:
-	rm -fR ./interface/*
-	./node_modules/.bin/vue-cli-service build --modern
+portal: VERSION=`node -e 'console.log(require("./package.json").version)'`
+portal: clean lint paths metadata package deploy vue npm
+	dpkg-deb --build dist
+	cp dist.deb builds/hbs-portal-$(VERSION)-hoobs-all.deb
+	rm -fR dist
+	dpkg-sig --sign builder builds/hbs-portal-$(VERSION)-hoobs-all.deb
 
 lint:
+	@echo $(VERSION)
 	./node_modules/.bin/vue-cli-service lint
 
-portal: lint package portal-interface portal.yaml
-	time nice $(as_root) vmdb2 --verbose cache/hbs-portal.yaml --rootfs-tarball=cache/hbs-portal.tar.gz --output=cache/hbs-portal.img --log build.log
-	$(as_root) chown ${USER}:${USER} cache/hbs-portal.tar.gz
-	$(as_root) rm -f cache/hbs-portal.img
-	$(as_root) rm -f cache/hbs-portal.yaml
-	$(as_root) chown ${USER}:${USER} builds/hbs-portal-${VERSION}-hoobs-all.deb
-	dpkg-sig --sign builder builds/hbs-portal-${VERSION}-hoobs-all.deb
-	rm -f ./cache/package.json
-
-log:
-	touch build.log
-	truncate -s 0 build.log
-
-paths: log
+paths:
 	mkdir -p interface
 	mkdir -p builds
-	mkdir -p cache
+	mkdir -p dist
+	mkdir -p dist/DEBIAN
+	mkdir -p dist/usr
+	mkdir -p dist/usr/lib
+	mkdir -p dist/usr/lib/hbs-portal
+	mkdir -p dist/usr/lib/systemd
+	mkdir -p dist/usr/lib/systemd/system
+	mkdir -p dist/usr/bin
 
-package: paths
-	node -e 'const pjson = require("./package.json"); delete pjson.scripts; delete pjson.devDependencies; require("fs").writeFileSync("cache/package.json", JSON.stringify(pjson, null, 4));'
+metadata:
+	cat control | \
+	sed "s/__VERSION__/$(VERSION)/" | \
+	sed "s/__DEPENDS__/nodejs (>= 14.15.0)/" | \
+	sed "s/__ARCH__/all/" > dist/DEBIAN/control
+
+package:
+	node -e 'const pjson = require("./package.json"); delete pjson.scripts; delete pjson.devDependencies; require("fs").writeFileSync("dist/usr/lib/hbs-portal/package.json", JSON.stringify(pjson, null, 4));'
+
+deploy:
+	cp -R main dist/usr/bin/hbs-portal
+	cp -R LICENSE dist/usr/lib/hbs-portal/
+	cp -R main.js dist/usr/lib/hbs-portal/
+	cp -R server dist/usr/lib/hbs-portal/
+	cp -R portal.service dist/usr/lib/systemd/system/hbs-portal.service
+
+vue:
+	rm -fR ./interface/*
+	./node_modules/.bin/vue-cli-service build --modern
+	cp -R interface dist/usr/lib/hbs-portal/
+
+npm:
+	npm --prefix dist/usr/lib/hbs-portal/ install dist/usr/lib/hbs-portal/
 
 clean:
-	rm -fR cache
+	rm -fR dist
 	rm -fR interface

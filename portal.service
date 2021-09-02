@@ -1,0 +1,10 @@
+[Unit]\
+Description=HOOBS Capitive WiFi Portal
+After=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/hbs-portal
+
+[Install]
+WantedBy=multi-user.target
