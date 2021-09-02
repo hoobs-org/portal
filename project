@@ -31,28 +31,34 @@ publish() {
     current=$(version)
 
     case $1 in
-        stable )    include "stable" "$current" "amd64"
-                    include "stable" "$current" "arm64"
-                    include "stable" "$current" "armel"
-                    include "stable" "$current" "armhf"
-                    include "stable" "$current" "i386"
+        stable )    include "stable" "$current" "all"
                     ;;
 
-        edge )      include "edge" "$current" "amd64"
-                    include "edge" "$current" "arm64"
-                    include "edge" "$current" "armel"
-                    include "edge" "$current" "armhf"
-                    include "edge" "$current" "i386"
+        edge )      include "edge" "$current" "all"
                     ;;
 
-        bleeding )  include "bleeding" "$current" "amd64"
-                    include "bleeding" "$current" "arm64"
-                    include "bleeding" "$current" "armel"
-                    include "bleeding" "$current" "armhf"
-                    include "bleeding" "$current" "i386"
+        bleeding )  include "bleeding" "$current" "all"
                     ;;
 
         * )         ;;
+    esac
+}
+
+list() {
+    case $1 in
+        stable )    reprepro -b ../repo/debian list stable
+                    ;;
+
+        edge )      reprepro -b ../repo/debian list edge
+                    ;;
+
+        bleeding )  reprepro -b ../repo/debian list bleeding
+                    ;;
+
+        * )         reprepro -b ../repo/debian list stable
+                    reprepro -b ../repo/debian list edge
+                    reprepro -b ../repo/debian list bleeding
+                    ;;
     esac
 }
 
@@ -69,7 +75,14 @@ case $1 in
     build )    make portal
                ;;
 
+    rebuild )  make clean
+               make portal
+               ;;
+
     publish )  publish $2
+               ;;
+
+    list )     list $2
                ;;
 
     clean )    make clean

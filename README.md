@@ -16,10 +16,16 @@ sudo apt install -y hoobs-portal
 ```
 
 ## Usage
-To start the portal run this command.
+This is designed to run as a service. You can start the portal in debug mode with this command.
 
 ```
-sudo hbs hbs-portal
+project debug
+```
+
+To build this project, run this command.
+
+```
+project build
 ```
 
 ## API
