@@ -26,7 +26,7 @@ paths:
 metadata:
 	cat control | \
 	sed "s/__VERSION__/$(VERSION)/" | \
-	sed "s/__DEPENDS__/nodejs (>= 14.15.0)/" | \
+	sed "s/__DEPENDS__/nodejs (>= 14.15.0), dnsmasq, hostapd/" | \
 	sed "s/__ARCH__/all/" > dist/DEBIAN/control
 
 package:

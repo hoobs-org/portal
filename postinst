@@ -1,3 +1,5 @@
 #!/bin/sh
 
+rm -f /etc/systemd/system/multi-user.target.wants/hostapd.service
+rm -f /etc/systemd/system/multi-user.target.wants/dnsmasq.service
 ln -s /lib/systemd/system/hbs-portal.service /etc/systemd/system/multi-user.target.wants/hbs-portal.service
