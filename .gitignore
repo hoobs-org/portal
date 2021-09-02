@@ -109,4 +109,4 @@ dist
 # Build output
 interface/
 builds/
-cache/
+dist/
