@@ -3,7 +3,7 @@ VERSION=`node -e 'console.log(require("./package.json").version)'`
 ifeq ($(shell id -u),0)
 	as_root = 
 else
-	$(error "This must be run as root")
+	as_root = sudo
 endif
 
 portal-amd64.yaml: build.yaml

@@ -82,9 +82,9 @@ steps:
       curl -s https://dl.hoobs.org/debian/pubkey.gpg.key | gpg --dearmor | tee /usr/share/keyrings/hoobs.gpg > /dev/null
     unless: rootfs_unpacked
 
-  - create-file: /etc/apt/sources.list.d/nodesource.list
+  - create-file: /etc/apt/sources.list.d/hoobs.list
     contents: |
-      echo 'deb [signed-by=/usr/share/keyrings/hoobs.gpg] https://dl.hoobs.org/debian/ stable main' > /etc/apt/sources.list.d/hoobs.list
+      deb [signed-by=/usr/share/keyrings/hoobs.gpg] https://dl.hoobs.org/debian/ stable main
     unless: rootfs_unpacked
 
   - chroot: /
