@@ -82,7 +82,7 @@ case $1 in
                make portal
                ;;
 
-    publish )  publish $2
+    publish )  publish $2 $3
                ;;
 
     clean )    make clean
