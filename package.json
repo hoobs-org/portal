@@ -1,6 +1,6 @@
 {
     "name": "hbs-portal",
-    "version": "1.0.0",
+    "version": "4.1.0",
     "description": "HOOBS Capitive WiFi Portal",
     "license": "GPL-3.0",
     "repository": {
@@ -20,7 +20,7 @@
         "debug": "scripts/debug"
     },
     "dependencies": {
-        "@hoobs/network": "^1.0.12",
+        "@hoobs/network": "^1.0.14",
         "commander": "^8.1.0",
         "compression": "^1.7.4",
         "express": "^4.17.1",

@@ -107,6 +107,7 @@ dist
 .DS_Store
 
 # Build output
+*.deb
 interface/
 builds/
 dist/

@@ -44,9 +44,7 @@ class Logger {
                 const lines = args[i].toString().split("\n").map((line) => line.trim()).filter((line) => line !== "");
 
                 for (let j = 0; j < lines.length; j++) {
-                    process.stdout.clearLine();
-                    process.stdout.cursorTo(0);
-                    process.stdout.write(`[${today} ${now}] ${lines[j]}\n`);
+                    console.log(`[${today} ${now}] ${lines[j]}`);
                 }
             } else {
                 this.output(args[i]);

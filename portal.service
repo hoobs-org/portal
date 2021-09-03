@@ -1,5 +1,5 @@
-[Unit]\
-Description=HOOBS Capitive WiFi Portal
+[Unit]
+Description=Capitive WiFi Portal
 After=NetworkManager.service
 
 [Service]
