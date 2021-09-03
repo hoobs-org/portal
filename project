@@ -40,6 +40,9 @@ publish() {
         bleeding )  include "bleeding" "$current" "all"
                     ;;
 
+        list )      list $2
+                    ;;
+
         * )         ;;
     esac
 }
@@ -80,9 +83,6 @@ case $1 in
                ;;
 
     publish )  publish $2
-               ;;
-
-    list )     list $2
                ;;
 
     clean )    make clean
