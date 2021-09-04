@@ -5,26 +5,34 @@ version() {
 }
 
 debug() {
-    sudo make interface
+    rm -fR ./interface/*
+
+    ./node_modules/.bin/vue-cli-service lint
+	./node_modules/.bin/vue-cli-service build --modern
+
     sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "sudo node -e 'require(`./main`)();' -- -d"
 }
 
 include() {
-    case $1 in
-        stable )    reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                    reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
-                    reprepro -b ../repo/debian includedeb stable builds/hbs-portal-$2-hoobs-$3.deb
-                    ;;
+    if [[ -f "../repo/debian/pool/main/h//hbs-portal//hbs-portal$2_$3.deb" ]]; then
+        echo "$2-$3 already published"
+    else
+        case $1 in
+            stable )    reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                        reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
+                        reprepro -b ../repo/debian includedeb stable builds/hbs-portal-$2-hoobs-$3.deb
+                        ;;
 
-        edge )      reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                    reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
-                    ;;
+            edge )      reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                        reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
+                        ;;
 
-        bleeding )  reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                    ;;
+            bleeding )  reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                        ;;
 
-        * )         ;;
-    esac
+            * )         ;;
+        esac
+    fi
 }
 
 publish() {
@@ -49,18 +57,18 @@ publish() {
 
 list() {
     case $1 in
-        stable )    reprepro -b ../repo/debian list stable | grep hbs-portal
+        stable )    reprepro -b ../repo/debian list stable hbs-portal
                     ;;
 
-        edge )      reprepro -b ../repo/debian list edge | grep hbs-portal
+        edge )      reprepro -b ../repo/debian list edge hbs-portal
                     ;;
 
-        bleeding )  reprepro -b ../repo/debian list bleeding | grep hbs-portal
+        bleeding )  reprepro -b ../repo/debian list bleeding hbs-portal
                     ;;
 
-        * )         reprepro -b ../repo/debian list stable | grep hbs-portal
-                    reprepro -b ../repo/debian list edge | grep hbs-portal
-                    reprepro -b ../repo/debian list bleeding | grep hbs-portal
+        * )         reprepro -b ../repo/debian list stable hbs-portal
+                    reprepro -b ../repo/debian list edge hbs-portal
+                    reprepro -b ../repo/debian list bleeding hbs-portal
                     ;;
     esac
 }
