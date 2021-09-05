@@ -10,11 +10,11 @@ debug() {
     ./node_modules/.bin/vue-cli-service lint
 	./node_modules/.bin/vue-cli-service build --modern
 
-    sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "sudo node -e 'require(`./main`)();' -- -d"
+    sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "sudo ./debug -d"
 }
 
 include() {
-    if [[ -f "../repo/debian/pool/main/h//hbs-portal//hbs-portal$2_$3.deb" ]]; then
+    if [[ -f "../repo/debian/pool/main/h/hbs-portal/hbs-portal$2_$3.deb" ]]; then
         echo "$2-$3 already published"
     else
         case $1 in
@@ -84,10 +84,6 @@ case $1 in
                ;;
 
     build )    make portal
-               ;;
-
-    rebuild )  make clean
-               make portal
                ;;
 
     publish )  publish $2 $3
