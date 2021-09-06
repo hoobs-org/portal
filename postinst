@@ -3,9 +3,4 @@
 deb-systemd-helper disable  'hostapd.service' > /dev/null || true
 deb-systemd-helper disable  'dnsmasq.service' > /dev/null || true
 deb-systemd-helper unmask 'hbs-portal.service' > /dev/null || true
-
-if deb-systemd-helper --quiet was-enabled 'hbs-portal.service'; then
-    deb-systemd-helper enable 'hbs-portal.service' > /dev/null || true
-else
-    deb-systemd-helper update-state 'hbs-portal.service' > /dev/null || true
-fi
+deb-systemd-helper enable 'hbs-portal.service' > /dev/null || true
