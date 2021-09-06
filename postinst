@@ -1,5 +1,5 @@
 #!/bin/sh
 
-systemctl disable hostapd.service
-systemctl disable dnsmasq.service
-systemctl enable hbs-portal.service
+systemctl disable hostapd.service || true
+systemctl disable dnsmasq.service || true
+systemctl enable hbs-portal.service || true
