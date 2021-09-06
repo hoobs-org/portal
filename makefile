@@ -1,12 +1,9 @@
-$(eval VERSION := $(shell project version))
-
-portal:
-	@echo $(VERSION)
 portal: clean lint paths metadata package deploy vue npm
 	dpkg-deb --build dist
-	cp dist.deb builds/hbs-portal-$(VERSION)-hoobs-all.deb
-	dpkg-sig --sign builder builds/hbs-portal-$(VERSION)-hoobs-all.deb
-portal: clean
+	cp dist.deb builds/hbs-portal-$(shell project version)-hoobs-all.deb
+	dpkg-sig --sign builder builds/hbs-portal-$(shell project version)-hoobs-all.deb
+	rm -fR dist
+	rm -fR interface
 
 lint:
 	./node_modules/.bin/vue-cli-service lint
@@ -25,7 +22,7 @@ paths:
 
 metadata:
 	cat control | \
-	sed "s/__VERSION__/$(VERSION)/" | \
+	sed "s/__VERSION__/$(shell project version)/" | \
 	sed "s/__DEPENDS__/nodejs (>= 14.15.0), dnsmasq, hostapd/" | \
 	sed "s/__ARCH__/all/" > dist/DEBIAN/control
 

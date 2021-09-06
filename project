@@ -10,7 +10,7 @@ debug() {
     ./node_modules/.bin/vue-cli-service lint
 	./node_modules/.bin/vue-cli-service build --modern
 
-    sudo ./node_modules/.bin/nodemon --watch . --ext js --signal SIGINT --exec "sudo ./debug -d"
+    sudo ./debug -d
 }
 
 include() {

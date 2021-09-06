@@ -39,7 +39,6 @@
         "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-vue": "^7.0.0",
         "inquirer": "^8.1.2",
-        "nodemon": "^2.0.12",
         "rimraf": "^3.0.2",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
