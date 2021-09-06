@@ -1,6 +1,5 @@
 #!/bin/sh
 
-deb-systemd-helper disable  'hostapd.service' > /dev/null || true
-deb-systemd-helper disable  'dnsmasq.service' > /dev/null || true
-deb-systemd-helper unmask 'hbs-portal.service' > /dev/null || true
-deb-systemd-helper enable 'hbs-portal.service' > /dev/null || true
+systemctl disable hostapd.service
+systemctl disable dnsmasq.service
+systemctl enable hbs-portal.service
