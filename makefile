@@ -1,4 +1,4 @@
-portal: clean lint paths metadata package deploy vue npm
+portal: clean lint paths metadata package deploy vue yarn
 	dpkg-deb --build dist
 	cp dist.deb builds/hbs-portal-$(shell project version)-hoobs-all.deb
 	dpkg-sig --sign builder builds/hbs-portal-$(shell project version)-hoobs-all.deb
@@ -42,8 +42,8 @@ vue:
 	./node_modules/.bin/vue-cli-service build --modern
 	cp -R interface dist/usr/lib/hbs-portal/
 
-npm:
-	npm --prefix dist/usr/lib/hbs-portal/ install dist/usr/lib/hbs-portal/
+yarn:
+	(cd dist/usr/lib/hbs-portal && ../../../../../node_modules/.bin/yarn install)
 
 clean:
 	rm -fR dist
