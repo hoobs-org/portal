@@ -2,6 +2,7 @@ portal: clean lint paths metadata package deploy vue yarn
 	dpkg-deb --build dist
 	cp dist.deb builds/hbs-portal-$(shell project version)-hoobs-all.deb
 	dpkg-sig --sign builder builds/hbs-portal-$(shell project version)-hoobs-all.deb
+	rm -f dist.deb
 	rm -fR dist
 	rm -fR interface
 
