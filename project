@@ -18,19 +18,20 @@ include() {
         echo "$2-$3 already published"
     else
         case $1 in
-            stable )    reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                        reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
-                        reprepro -b ../repo/debian includedeb stable builds/hbs-portal-$2-hoobs-$3.deb
-                        ;;
+            stable )
+                reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
+                reprepro -b ../repo/debian includedeb stable builds/hbs-portal-$2-hoobs-$3.deb
+                ;;
 
-            edge )      reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                        reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
-                        ;;
+            edge )
+                reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                reprepro -b ../repo/debian includedeb edge builds/hbs-portal-$2-hoobs-$3.deb
+                ;;
 
-            bleeding )  reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
-                        ;;
-
-            * )         ;;
+            bleeding )
+                reprepro -b ../repo/debian includedeb bleeding builds/hbs-portal-$2-hoobs-$3.deb
+                ;;
         esac
     fi
 }
@@ -39,58 +40,68 @@ publish() {
     current=$(version)
 
     case $1 in
-        stable )    include "stable" "$current" "all"
-                    ;;
+        stable )
+            include "stable" "$current" "all"
+            ;;
 
-        edge )      include "edge" "$current" "all"
-                    ;;
+        edge )
+            include "edge" "$current" "all"
+            ;;
 
-        bleeding )  include "bleeding" "$current" "all"
-                    ;;
+        bleeding )
+            include "bleeding" "$current" "all"
+            ;;
 
-        list )      list $2
-                    ;;
-
-        * )         ;;
+        list )
+            list $2
+            ;;
     esac
 }
 
 list() {
     case $1 in
-        stable )    reprepro -b ../repo/debian list stable hbs-portal
-                    ;;
+        stable )
+            reprepro -b ../repo/debian list stable hbs-portal
+            ;;
 
-        edge )      reprepro -b ../repo/debian list edge hbs-portal
-                    ;;
+        edge )
+            reprepro -b ../repo/debian list edge hbs-portal
+            ;;
 
-        bleeding )  reprepro -b ../repo/debian list bleeding hbs-portal
-                    ;;
+        bleeding )
+            reprepro -b ../repo/debian list bleeding hbs-portal
+            ;;
 
-        * )         reprepro -b ../repo/debian list stable hbs-portal
-                    reprepro -b ../repo/debian list edge hbs-portal
-                    reprepro -b ../repo/debian list bleeding hbs-portal
-                    ;;
+        * )
+            reprepro -b ../repo/debian list stable hbs-portal
+            reprepro -b ../repo/debian list edge hbs-portal
+            reprepro -b ../repo/debian list bleeding hbs-portal
+            ;;
     esac
 }
 
 case $1 in
-    version )  version
-               ;;
+    version ) 
+        version
+        ;;
 
-    lint )     make lint
-               ;;
+    lint )
+        make lint
+        ;;
 
-    debug )    debug
-               ;;
+    debug )
+        debug
+        ;;
 
-    build )    make portal
-               ;;
+    build )
+        make portal
+        ;;
 
-    publish )  publish $2 $3
-               ;;
+    publish )
+        publish $2 $3
+        ;;
 
-    clean )    make clean
-               ;;
-
-    * )        ;;
+    clean )
+        make clean
+        ;;
 esac
