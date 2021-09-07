@@ -27,7 +27,7 @@ metadata:
 	sed "s/__ARCH__/all/" > dist/DEBIAN/control
 
 package:
-	node -e 'const pjson = require("./package.json"); delete pjson.scripts; delete pjson.devDependencies; require("fs").writeFileSync("dist/usr/lib/hbs-portal/package.json", JSON.stringify(pjson, null, 4));'
+	node -e 'const pjson = require("./package.json"); delete pjson.devDependencies; require("fs").writeFileSync("dist/usr/lib/hbs-portal/package.json", JSON.stringify(pjson, null, 4));'
 
 deploy:
 	cp -R main dist/usr/bin/hbs-portal
