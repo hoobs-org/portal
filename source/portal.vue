@@ -93,15 +93,12 @@
                 if (this.iface) {
                     this.loading = true;
 
-                    await request.post(`/api/${this.iface}/connect/`, { ssid, password });
+                    request.post(`/api/${this.iface}/connect/`, { ssid, password });
 
-                    if (((((await request.get("/api/")) || {}).data || {}).connections || []).find((connection) => connection.iface === this.iface && connection.ssid === ssid)) {
+                    setTimeout(() => {
                         this.connected = true;
-                    } else {
-                        this.scan();
-                    }
-
-                    this.loading = false;
+                        this.loading = false;
+                    }, 1000 * 20);
                 }
             },
 

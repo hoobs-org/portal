@@ -1,6 +1,6 @@
 {
     "name": "hbs-portal",
-    "version": "4.1.1",
+    "version": "4.1.2",
     "description": "HOOBS Capitive WiFi Portal",
     "license": "GPL-3.0",
     "repository": {
@@ -27,7 +27,7 @@
         "@vue/cli-service": "~4.5.0",
         "@vue/compiler-sfc": "^3.0.0",
         "@vue/eslint-config-airbnb": "^5.0.2",
-        "axios": "^0.21.1",
+        "axios": "^0.23.0",
         "babel-eslint": "^10.1.0",
         "core-js": "^3.6.5",
         "eslint": "^6.7.2",
