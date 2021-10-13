@@ -19,7 +19,6 @@
 const http = require("http");
 const express = require("express");
 const network = require("@hoobs/network");
-const compression = require("compression");
 const { createHttpTerminator } = require("http-terminator");
 const { join } = require("path");
 
@@ -30,7 +29,6 @@ class Server {
 
         const app = express();
 
-        app.use(compression());
         app.use(express.json());
         app.disable("x-powered-by");
 
@@ -43,9 +41,7 @@ class Server {
             next();
         });
 
-        app.use("/", express.static(join(__dirname, "../interface"), {
-            setHeaders: (response) => { response.setHeader("cache-control", "public, max-age=1209600000"); },
-        }));
+        app.use("/", express.static(join(__dirname, "../interface")));
 
         require("./network")(app);
         require("./ethernet")(app);
