@@ -13,28 +13,12 @@ debug() {
     sudo ./debug -d
 }
 
-include() {
-    if [[ -f "../repo/debian/pool/main/h/hbs-portal/hbs-portal_$2_$3.deb" ]]; then
-        echo "$2-$3 already published"
-    else
-        reprepro -b ../repo/debian includedeb $1 builds/hbs-portal-$2-hoobs-$3.deb
-    fi
-}
-
 publish() {
     current=$(version)
 
     case $1 in
-        stable )
-            include "stable" "$current" "all"
-            ;;
-
-        edge )
-            include "edge" "$current" "all"
-            ;;
-
-        bleeding )
-            include "bleeding" "$current" "all"
+        stable | edge | bleeding )
+            reprepro -b ../repo/debian includedeb $1 builds/hbs-portal-$current-hoobs-all.deb
             ;;
 
         list )
