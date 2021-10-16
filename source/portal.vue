@@ -89,16 +89,17 @@
                 if (!this.interval) this.interval = setInterval(() => this.scan(), 10 * 1000);
             },
 
-            async connect(ssid, password) {
+            connect(ssid, password) {
                 if (this.iface) {
                     this.loading = true;
+                    this.connected = false;
 
                     request.post(`/api/${this.iface}/connect/`, { ssid, password });
 
                     setTimeout(() => {
                         this.connected = true;
                         this.loading = false;
-                    }, 1000 * 20);
+                    }, 1000 * 5);
                 }
             },
 
