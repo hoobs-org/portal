@@ -935,10 +935,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hoobs/network@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@hoobs/network/-/network-1.0.15.tgz#b2db01ec682cd9e3b26a4e18eaa09baa1a852861"
-  integrity sha512-CgfC+ZG5B5coMKokCeNzDV5S8ehLQ1sHiBji4Znxjsw7k1Q2RO43GNrKcxv45h0TmuvYcghKTVoLITHcc2K6Qw==
+"@hoobs/network@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@hoobs/network/-/network-1.0.18.tgz#f44e0ceecdcea4e5552419e06a81a5dbed9550c0"
+  integrity sha512-XjDX8YKocfCA0yo2XRXuPpD2ElSFZk/bkm/wynwFxQ6jClpdTpS9t7VKYpUXv70IY8XsuHcxtjoA2I+diTDIxA==
 
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
